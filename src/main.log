@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.8.29)  6 JUL 2026 10:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.8.29)  6 JUL 2026 19:38
 entering extended mode
 **./main.tex
 (main.tex
@@ -954,34 +954,34 @@ rnal.sty
 \r@pgf@reada=\read3
 )
 LaTeX Font Info:    Trying to load font information for OT1+phv on input line 6
-8.
+6.
 
 (C:\Users\Marjan\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1phv.fd
 File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
 )
-No file main.aux.
+(main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for LCOP/coptic/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for LCOP/coptic/m/n on input line 66.
+LaTeX Font Info:    ... okay on input line 66.
 
 (C:\Users\Marjan\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.m
 kii
@@ -1042,7 +1042,7 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 68.
+Package hyperref Info: Link coloring OFF on input line 66.
 (C:\Users\Marjan\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
@@ -1055,9 +1055,10 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count339
 )
-LaTeX Info: Redefining \ref on input line 68.
-LaTeX Info: Redefining \pageref on input line 68.
-LaTeX Info: Redefining \nameref on input line 68.
+LaTeX Info: Redefining \ref on input line 66.
+LaTeX Info: Redefining \pageref on input line 66.
+LaTeX Info: Redefining \nameref on input line 66.
+ (main.out) (main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
@@ -1067,7 +1068,7 @@ LaTeX Info: Redefining \nameref on input line 68.
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into 
 your preamble.
- on input line 68.
+ on input line 66.
 
 [1
 
@@ -1083,11 +1084,18 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [2
 
-]
+] (main.toc
+LaTeX Font Info:    Trying to load font information for U+wasy on input line 4.
+
+
+(C:\Users\Marjan\AppData\Local\Programs\MiKTeX\tex/latex/wasysym\uwasy.fd
+File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
+))
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
- [3]
+
+[3]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1113,6 +1121,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 ]
 Chapter 2.
+LaTeX Font Info:    Trying to load font information for TS1+phv on input line 1
+29.
+(C:\Users\Marjan\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1phv.fd
+File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
+)
 [7]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1122,10 +1135,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[8
+[8]
 
-]
-Chapter 3.
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
 [9]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1135,11 +1153,25 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[10
+[10]
+Overfull \hbox (183.53003pt too wide) in paragraph at lines 334--342
+ [][] 
+ []
 
-]
-Chapter 4.
-[11]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[11pdfTeX warning (ext4): destination with the same identifier (name{table.2.1}
+) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.346     \chapter
+                  {Creation, Management and Registry}]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1151,7 +1183,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [12
 
 ]
-Chapter 5.
+Chapter 3.
 [13]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1164,7 +1196,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [14
 
 ]
-Chapter 6.
+Chapter 4.
 [15]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1177,7 +1209,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [16
 
 ]
-Chapter 7.
+Chapter 5.
 [17]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1190,7 +1222,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [18
 
 ]
-Chapter 8.
+Chapter 6.
 [19]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1203,33 +1235,63 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [20
 
 ]
+Chapter 7.
+[21]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[22
+
+]
+Chapter 8.
+[23]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[24
+
+]
 Chapter 9.
-[21] (main.aux)
+[25] (main.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 
 Package rerunfilecheck Warning: File `main.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  9862F21AA4768F5CA53FDDA4316B0E42;1496.
+(rerunfilecheck)             Before: FD5CF9703414F9A016F7BDC190C02897;1637
+(rerunfilecheck)             After:  420B532BC77F49CEAD6631B6D15B714B;4870.
  ) 
 Here is how much of TeX's memory you used:
- 34183 strings out of 478864
- 806079 string characters out of 2848186
- 1352151 words of memory out of 3000000
- 51514 multiletter control sequences out of 15000+600000
- 413361 words of font info for 40 fonts, out of 8000000 for 9000
+ 34627 strings out of 478864
+ 810951 string characters out of 2848186
+ 1449151 words of memory out of 3000000
+ 51850 multiletter control sequences out of 15000+600000
+ 422258 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,11n,89p,723b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,12n,89p,723b,1912s stack positions out of 5000i,500n,10000p,200000b,80000s
 {C:/Users/Marjan/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}<C
-:/Users/Marjan/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pf
-b><C:/Users/Marjan/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvr8
-a.pfb>
+:/Users/Marjan/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmt
+t10.pfb><C:/Users/Marjan/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic
+/uhvb8a.pfb><C:/Users/Marjan/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helv
+etic/uhvr8a.pfb>
 Output written on C:/Users\Marjan\Documents\LatexNotes\docker-certified-associa
-te-notes\src\main.pdf (21 pages, 36710 bytes).
+te-notes\src\main.pdf (25 pages, 89077 bytes).
 PDF statistics:
- 126 PDF objects out of 1000 (max. 8388607)
- 33 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 281 PDF objects out of 1000 (max. 8388607)
+ 112 named destinations out of 1000 (max. 500000)
+ 93 words of extra memory for PDF output out of 10000 (max. 10000000)
 

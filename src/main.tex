@@ -31,6 +31,24 @@
 \usepackage{xcolor}
 \usepackage{tweaklist}
 \usepackage{tikzexternal}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{terminalbg}{RGB}{30,30,30}
+\definecolor{terminalfg}{RGB}{220,220,220}
+\definecolor{terminalgreen}{RGB}{152,195,121}
+
+\lstdefinestyle{terminal}{
+    backgroundcolor=\color{terminalbg},
+    basicstyle=\ttfamily\small\color{terminalfg},
+    frame=single,
+    rulecolor=\color{black},
+    breaklines=true,
+    columns=fullflexible,
+    showstringspaces=false,
+    keywordstyle=\color{terminalgreen},
+    commentstyle=\color{gray},
+}
 
 %\usepackage{amstex} % Helvetica as a sans-serif font alternative
 \renewcommand{\rmdefault}{phv} % Set the default font family to Helvetica
@@ -64,28 +82,290 @@
 
 
     \chapter{Notes info introduction}
+
     \paragraph{Purpose of notes}
     These are a set of notes on Docker.
-    
+
+
     \chapter{Geting Started with Docker}
+
+    \section{Base CLI Command}
+    \subsection{Docker Image commands}
+    \begin{lstlisting}[style=terminal]
+        docker image build
+        docker image history
+        docker image inspect
+        docker image pull
+    \end{lstlisting}
+
+    \subsection{Docker Container Commands}
+    \begin{lstlisting}[style=terminal]
+        docker container create
+        docker container exec
+        docker container logs
+        docker container run
+    \end{lstlisting}
+
+    Can use man pages via CLI.
+    See \texttt{docker container --help}
+    See \texttt{docker container create --help}
+
+    Consider old syntax vs new syntax
+    \begin{lstlisting}[style=terminal]
+        docker run <image>
+        docker ps
+        docker logs <ps>
+        #--------------New syntex
+        docker container run
+        docker container ls
+        docker contiainer logs <id>
+    \end{lstlisting}
+
+    \texttt{docker ps} is the same as \texttt{docker container ls}
+
+    \section{Images vs Containers}
+    A Docker image is a standalone, read-only package that includes everything needed to run a software application: the code, runtime, system tools, libraries and settings.
+    \begin{itemize}
+        \item App Runtime
+        \item Libraries
+        \item Config and Env Vars
+        \item Dependencies
+    \end{itemize}
+
+    Docker containers are running instances of images.
+    See docker hub for more
+
+    Can launch multiple containers from a Single Docker Image
+    Can launch multiple containers from different docker Images
+
+    \subsection{Attached vs Detached modes}
+    In most cases you will be running containers in detached modes, however there some specific use cases where you might wan tot run it in attached mode as well.
+
+    When you use the docker container run <image> without any extra flags, Docker starts the container in Attached Mode.
+    In this mode, your terminal's local standard input, output and error streams are "attached" to the container.
+
+    Note: If you press Ctrl + C in ther terminal, you send a SIGINT signal to the container's primary process, which usually stops the container entirely.
+
+    To run a container in the background, you use the -d or --detach flag.
+    This detached mode is the standard for any long-running service, for example web server containers or database containers.
+    Ideally, you would like it to be runnig all of the time so you would use it with detached mode.
+
+
+    \begin{lstlisting}[style=terminal]
+        docker container run nginix
+        docker container run --detach nginix
+        docker container run -d nginix
+    \end{lstlisting}
+
+    Generally in most cases, you wil be using the detached mode in the production environments.
+
+%    TODO add detached mode and attached mode table for reference
     
-    \chapter{Image Creation, Management and Registry}
+    \subsection{Basic Container Management Commands}
+
+    When you have container running you can perform multiple operations on the container.
+
+    \subsubsection{Managing the state of a container}
+    \begin{lstlisting}[style=terminal]
+        docker container start <name>
+        docker container stop <name>
+        docker container restart <name>
+    \end{lstlisting}
+
+    \subsubsection{Monitoring Performance}
+    Example: A container can be consuming a certain level of memory and CPU
+    \begin{lstlisting}[style=terminal]
+        docker container stats <name>
+    \end{lstlisting}
+
+    This command can be useful in identifying which container is using the most CPU.
+
+    \begin{lstlisting}[style=terminal]
+        docker container inspect <name>
+    \end{lstlisting}
+
+    This command will get detailed information related to the container.
+
+    \begin{lstlisting}[style=terminal]
+        docker container rm <name>
+        docker container rm <name> --force
+        #--- use for exited containers
+        docker container ls -a
+        docker container rm <name1> <name2>
+    \end{lstlisting}
+
+    This will remove a container. If the container is running you can use force remove.
+
+%    TODO add table
+
+    \subsection{Basic Container Lifecycle}
+    A docker container lives as long as its main process runs.
+    If the process stops, the container stops.
+    If the process is running the container will continue to run.
+
+    Short-lived containers
+    - Use for scripts, batch jobs and one time commands.
+
+    Long Running Containers
+    - Run a continuous process
+    User for Web Servers, APIs, Database etc.
+
+    In production environments you will most likely use long-running containers.
+
+    \subsubsection{Default Container Command}
+    In Docker, the default container command is the instruction that tells the container process which process to run immediately upon starting.
+    You can override the default container command if required.
     
+    \subsection{Docker Container exec}
+    \texttt{docker exec} lets you run a command inside an already running container.
+
+    \begin{lstlisting}[style=terminal]
+        docker container exec nginx ls -l
+    \end{lstlisting}
+
+    \subsection{docker container exec - important of -i and -t flags}
+
+    For simple commands that just print the output, you don't need any flags. The command runs, prints its result to your terminal and exits.
+    No interaction is needed.
+
+    In most cases however you would want ot go inside the container, so you will require a shell.
+    In such cases, you will require an additional set of flags that need to be added here.
+
+    If you want to connect inside a container using a shell like bash, sh (similar to SSH), the default approach will not work.
+    Bash will close immediately.
+    This is because it is an interactive shell that detects there is no input stream (STDIN) to read from.
+    Without an active input stream or a terminal, it assumes its job is done and exists immediately.
+
+    \subsection{The -i flag (interactive)}
+    By default, Docker runs commands in non-interactive mode and does not keep the input stream (STDIN) open.
+    using -i keeps STDIN attached to the container process, which is necessary for any interactive process.
+
+    \begin{lstlisting}[style=terminal]
+        docker container exec -i nginx bash
+    \end{lstlisting}
+
+    \subsection{The -t Flag (TTY)}
+    This will give you a full-fledged experience.
+    Overview: the hyphen t flag allocates a pseudo terminal.
+    If you just use the -t flag, the standard input get closed so that the keystrokes have no path to reach the process inside the container.
+
+    \begin{lstlisting}[style=terminal]
+        docker container exec -t nginx bash # This is very similar to SSH into a Linux server
+    \end{lstlisting}
+
+    Using the -it option, users can get a full interactive shell.
+    You can type, navigate and explore.
+
+    \begin{lstlisting}[style=terminal]
+        docker container exec -it nginx bash
+        docker container exec -i -t nginx bash #Equivalent
+        exit # Return to the host system.
+    \end{lstlisting}
+
+    Using this command, you can run everything inside the container environment.
+
+    Note: Not every container comes with a shell, however the majority of them do.
+    Note: Navigate Linux/OS file directory to see which binaries are available.
+    
+    \section{Basics of Ports}
+    When data arrives at your computer or a server, the operating system needs to know which program should receive it.
+    Ports help figure out which application should receive incoming data.
+    An application can listen on a specific port number (port binding)
+
+    When incoming data comes, this data will also have the port number.
+    The server will forward the data to the application with the matching port number.
+    Ports are numbers from 0 to 65,535 and only one process can bind to a specific port on the same IP address at a time.
+
+    It is the responsibility of the incoming data to provide the port number so that the operating system can correctly map and send the data to the appropriate program over here.
+
+
+    \begin{lstlisting}[style=terminal]
+        netstat -ntlp # for linux. See what applications are bound to which ports.
+    \end{lstlisting}
+
+    \section{Publishing Ports in Docker}
+%    TODO mebe add a diagram
+    When a container has been started, it is assigned a unique IP address within its configured Docker network.
+    The application running inside the container may listen on a specific port.
+
+    Containers connected to the same network can communicate with each other using the contain's IP address and the application's listening port.
+
+    Note: The internal Docker network IP addresses are not directly accessible from the host system (In Windows and Mac OS).
+    On linux hosts, the Docker bridge network is directly reachable from the host via container IP.
+
+    \begin{lstlisting}[style=terminal]
+        curl 172.17.0.2:80 # This will work on Linux not on windows or mac OS
+    \end{lstlisting}
+
+    \subsection{Ports Concept}
+    When we talk about ports in Docker, we are always talking about two different locations.
+    - Host Port (outside) - The port you type into your browser (e.g. localhost:8080)
+    - Container Port (inside) - The port the actual application is configured to use (e.g. 80)
+
+    \subsection{Connecting to Container Application}
+    To allow a container to accept incoming connections from the host or the outside world, you must bind (map) it to a host port.
+    Once this is done the users can send a request to the IP address of the server followed by the port number.
+
+    \begin{lstlisting}[style=terminal]
+        docker container run -d --name nginx -p 8080:80 nginx
+        curl 172.17.0.2:8080 # this should work after the above command
+    \end{lstlisting}
+
+    \section{Docker Restart Policy}
+    by default, Docker containers will no start when they exit or when the docker daemon is restarted.
+    Sometimes the server restarts and we want all the the containers to automatically be started again.
+
+    Docker provides restart policies to control whether your containers start automatically when they exit, or when Docker restarts.
+
+    \subsection{Restart policies}
+    You can specify the restart policy by using the --restart flag with the docker run command.
+    \begin{itemize}
+        \item no - The defaul. Docker will not restart the container under any circumstances
+        \item on-failure - Restarts only if the container exits with a non-zero exit code
+        \item unless-stopped - Always restarts except when you manually stop the container. If manually stopped, it won't restart even after a daemon restart.
+        \item always - Always restarts regardless of exit code, including after a daemon restart --- even if the container way manually stopped before the daemon went down.
+    \end{itemize}
+
+    In production environments we want the containers to start back up again should the server restart.
+    
+    \subsection{Choosing the right policy}
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            Policy & Restarts on crash? & Restarts on success exit? & Restarts after daemon restart & Best for \\ \hline
+            no & No & No & No & Development, testing\\ \hline
+            always & Yes & Yes & Yes & Critical services, web servers \\ \hline
+            on-failure & yes & no & Only if it was running & Batch jobs, scripts \\ \hline
+            unless-stopped& Yes & Yes & Only if no manually stopped & Databases, background services \\ \hline
+        \end{tabular}
+        \caption{Your table caption}
+        \label{tab:mytable}
+    \end{table}
+
+    \chapter{Creation, Management and Registry}
+
+
     \chapter{Networking}
-    
+
+
     \chapter{Orchestration}
 %    TODO consider skipping
+
 
     \chapter{Orchestration using Kubernetes}
 %    TODO consider skipping
 
+
     \chapter{Installation and Configuration of Docker EE}
 %    TODO consider skipping
-    
+
+
     \chapter{Security}
-    
+
+
     \chapter{Storage and Volumes}
-    
+
 %    \chapter{Exam Preparation Section}
 
 \end{document}
