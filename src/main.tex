@@ -1,0 +1,91 @@
+%! Author = Marjan
+%! Date = 06/07/2025
+
+% Preamble
+\documentclass[11pt]{book}
+
+% Packages
+\usepackage{amsmath}    % For math symbols and equations
+\usepackage{graphicx}   % For including graphics
+\usepackage{geometry}   % For adjusting page layout
+\usepackage{fancyhdr}   % For custom headers/footers
+\usepackage{hyperref}   % For hyperlinks
+\usepackage{listings}   % For code listing
+\usepackage{lipsum}     % For placeholder text (to test layout)
+\usepackage{helvet}
+\usepackage{arydshln}
+\usepackage{tikz}        % For creating diagrams and drawing
+\usetikzlibrary{
+    positioning,
+    arrows.meta,
+    shapes,
+    fit,
+    backgrounds,
+    calc
+}
+
+\usepackage{pgfplots}    % For plotting graphs
+\usepackage{wasysym}
+\usepackage{float}
+\usepackage{coptic}
+\usepackage{xcolor}
+\usepackage{tweaklist}
+\usepackage{tikzexternal}
+
+%\usepackage{amstex} % Helvetica as a sans-serif font alternative
+\renewcommand{\rmdefault}{phv} % Set the default font family to Helvetica
+
+% Set page margins (A4 paper)
+\geometry{top=1in, bottom=1in, left=1in, right=1in}
+
+% Set up the header
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Docker Notes}
+\fancyhead[C]{Your Name}
+\fancyhead[R]{\thepage}
+% Document
+\begin{document}
+% Title Page
+    \begin{titlepage}
+        \centering
+        \vspace*{2in}
+        \Huge \textbf{Docker Notes}
+        \vfill
+        \Large Your Name
+        \vfill
+        \Large Date: %\today
+    \end{titlepage}
+
+    \newpage
+
+    \tableofcontents
+    \newpage
+
+
+    \chapter{Notes info introduction}
+    \paragraph{Purpose of notes}
+    These are a set of notes on Docker.
+    
+    \chapter{Geting Started with Docker}
+    
+    \chapter{Image Creation, Management and Registry}
+    
+    \chapter{Networking}
+    
+    \chapter{Orchestration}
+%    TODO consider skipping
+
+    \chapter{Orchestration using Kubernetes}
+%    TODO consider skipping
+
+    \chapter{Installation and Configuration of Docker EE}
+%    TODO consider skipping
+    
+    \chapter{Security}
+    
+    \chapter{Storage and Volumes}
+    
+%    \chapter{Exam Preparation Section}
+
+\end{document}
