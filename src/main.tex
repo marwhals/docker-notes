@@ -50,6 +50,44 @@
     commentstyle=\color{gray},
 }
 
+
+% Dockerfile language definition
+\lstdefinelanguage{Dockerfile}{
+    sensitive=true,
+    keywords={
+        FROM,RUN,CMD,LABEL,MAINTAINER,EXPOSE,ENV,ADD,COPY,
+        ENTRYPOINT,VOLUME,USER,WORKDIR,ARG,ONBUILD,STOPSIGNAL,
+        HEALTHCHECK,SHELL
+    },
+    keywordstyle=\color{blue}\bfseries,
+    comment=[l]{\#},
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red},
+    morestring=[b]",
+    morestring=[b]',
+}
+
+% Style for Dockerfiles
+\lstdefinestyle{dockerstyle}{
+    language=Dockerfile,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=8pt,
+    frame=single,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    tabsize=2,
+    captionpos=b,
+    columns=fullflexible
+}
+
+
 %\usepackage{amstex} % Helvetica as a sans-serif font alternative
 \renewcommand{\rmdefault}{phv} % Set the default font family to Helvetica
 
@@ -89,7 +127,9 @@
 
     \chapter{Geting Started with Docker}
 
+
     \section{Base CLI Command}
+
     \subsection{Docker Image commands}
     \begin{lstlisting}[style=terminal]
         docker image build
@@ -122,6 +162,7 @@
     \end{lstlisting}
 
     \texttt{docker ps} is the same as \texttt{docker container ls}
+
 
     \section{Images vs Containers}
     A Docker image is a standalone, read-only package that includes everything needed to run a software application: the code, runtime, system tools, libraries and settings.
@@ -160,7 +201,7 @@
     Generally in most cases, you wil be using the detached mode in the production environments.
 
 %    TODO add detached mode and attached mode table for reference
-    
+
     \subsection{Basic Container Management Commands}
 
     When you have container running you can perform multiple operations on the container.
@@ -215,7 +256,7 @@
     \subsubsection{Default Container Command}
     In Docker, the default container command is the instruction that tells the container process which process to run immediately upon starting.
     You can override the default container command if required.
-    
+
     \subsection{Docker Container exec}
     \texttt{docker exec} lets you run a command inside an already running container.
 
@@ -266,7 +307,8 @@
 
     Note: Not every container comes with a shell, however the majority of them do.
     Note: Navigate Linux/OS file directory to see which binaries are available.
-    
+
+
     \section{Basics of Ports}
     When data arrives at your computer or a server, the operating system needs to know which program should receive it.
     Ports help figure out which application should receive incoming data.
@@ -282,6 +324,7 @@
     \begin{lstlisting}[style=terminal]
         netstat -ntlp # for linux. See what applications are bound to which ports.
     \end{lstlisting}
+
 
     \section{Publishing Ports in Docker}
 %    TODO mebe add a diagram
@@ -327,87 +370,644 @@
     \end{itemize}
 
     In production environments we want the containers to start back up again should the server restart.
-    
+
     \subsection{Choosing the right policy}
     \begin{table}[ht]
         \centering
         \begin{tabular}{|c|c|c|c|c|}
             \hline
-            Policy & Restarts on crash? & Restarts on success exit? & Restarts after daemon restart & Best for \\ \hline
-            no & No & No & No & Development, testing\\ \hline
-            always & Yes & Yes & Yes & Critical services, web servers \\ \hline
-            on-failure & yes & no & Only if it was running & Batch jobs, scripts \\ \hline
-            unless-stopped& Yes & Yes & Only if no manually stopped & Databases, background services \\ \hline
+            Policy         & Restarts on crash? & Restarts on success exit? & Restarts after daemon restart & Best for \\ \hline
+            no             & No                 & No                        & No                            & Development, testing           \\ \hline
+            always         & Yes                & Yes                       & Yes                           & Critical services, web servers \\ \hline
+            on-failure     & yes                & no                        & Only if it was running        & Batch jobs, scripts            \\ \hline
+            unless-stopped & Yes                & Yes                       & Only if no manually stopped   & Databases, background services \\ \hline
         \end{tabular}
-        \caption{Your table caption}
-        \label{tab:mytable}
+%        \caption{Your table caption}
+%        \label{tab:mytable}
     \end{table}
 
+
     \chapter{Creation, Management and Registry}
+
+
     \section{Basics of a Dockerfile}
+    A docker container is a running instance of image, whatever container you make is based of one of these docker images.
+    There are numerous images available. From these images, multiple containers can be created.
+
+    For an organisation, you may want your own customized images.
+
+    A dockerfile is a simple text file containing ordered step-by-step instructions (commands) used to build a Docker image.
+
+    The workflow is, docker file into docker image into a running docker container.
+    To create a docker file create a a file called "Dockerfile".
+
+    \begin{lstlisting}[style=terminal]
+        docker build -t image_name . # will reference the docker file in the same folder
+        docker container run -d -p 8080:80 --name container_name container_image:latest #Create the container
+    \end{lstlisting}
+
+    There is a wide range of instructions available that can be used in a Dockerfile to build and image.
+
+    Some of these include:
+
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{|c|c|}
+            \hline
+            Instructions & Description                                                            \\ \hline
+            FROM         & The starting point. Every Dockerfile must start with this              \\ \hline
+            CMD          & The default command that executes                                      \\ \hline
+            RUN          & Executes a command during the build process (e.g installing a package) \\ \hline
+            COPY         & Copies files from your local machine into the container                \\ \hline
+            SHELL        & Set the default shell of an image                                      \\ \hline
+        \end{tabular}
+%        \caption{Your table caption}
+%        \label{tab:mytable}
+    \end{table}
+
+    \subsection{Format of a Dockerfile}
+    The format of a Dockerfile follows the syntax INSTRUCTION <arguments>
+
+
     \section{Docker file Instructions}
+    Before you can createa a docker file the necessary set of instructions.
+    See Docs for the set of instructions. Using this you can build a custom set of images.
+
+    \subsection{FROM}
+    The FROM instruction sets the base image that all subsequent instructions build upon.
+
+    \subsection{RUN}
+    The RUN instruction executes a command during the build process
+    \texttt{RUN apt-get install nginx}
+
+    \subsection{CMD}
+
+    CMD instruction allows users to provide the default command that executes when the container starts.
+
+    \subsection{Example DockerFile}
+    Prior to building a docker image, try it in a base container.
+
+    \begin{lstlisting}[style=terminal]
+        docker container run -d --name ubuntu-container ubuntu:latest sleep 3600 # Run the container
+        docker container exec -it ubuntu-container bash # Open a bash shell on the container to check if desired programs are installed
+
+        # --------- from inside the container -----
+        apt update
+        apt install iputils-ping -y # Install ping for this example. -y so no prompt is asked.
+    \end{lstlisting}
+
+    Now we can map this to instructions in the DockerFile.
+
+    \begin{lstlisting}[style=dockerstyle,caption={Example Dockerfile}]
+        FROM ubuntu:latest
+
+        RUN apt update
+
+        RUN apt install iputils-ping -y
+
+        CMD ["ping", "google.com"]
+    \end{lstlisting}
+
+    Using this image file we can build an image.
+
+    \begin{lstlisting}[style=terminal]
+        docker build -t <image-name> . # Ensure that you are in the right folder
+        docker container run --name <container-name> <container-image>
+    \end{lstlisting}
+
+    \subsection{COPY and ADD}
+    COPY and ADD serve the same fundamental purpose
+    "they can move files from you host machine into the container's file system"
+
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{|c|c|c|}
+            \hline
+            Feature         & COPY & ADD \\ \hline
+            Primary Function             & Copies local files / folder to the image                 & Copies local files / folders to the image    \\ \hline
+            Remote URLs         & Not Supported                & Can download files from a URL   \\ \hline
+            Auto-Extraction     & Does not extract compressed file                & Automatically extracts .tar, gzip, etc    \\ \hline
+            Best Practice & Recommended from most use cases & Use only when specific features are needed   \\ \hline
+        \end{tabular}
+%        \caption{Your table caption}
+%        \label{tab:mytable}
+    \end{table}
+
+    Think of COPY as a simple "Ctrl+C, Ctrl+V.". It is transparent and predictable.
+    Docker official documentation recommends using COPY unless you have a specific reason not to.
+
+    \subsection{ENTRYPOINT}
+    \subsubsection{Revising Basics of CMD Instruction}
+    CMD allows users to provide the default command that executes when the container starts.
+    CMD instructions can easily be over run by the docker run arguments.
+
+    \subsubsection{ENTRYPOINT instruction}
+    ENTRYPOINT sets the default executable for your container.
+
+    Any arguments supplied to the docker run command are appended to the ENTRYPOINT command
+
+    \begin{lstlisting}[style=dockerstyle,caption={Example Dockerfile}]
+        FROM ubuntu:latest
+
+        RUN apt update
+
+        RUN apt install iputils-ping -y
+
+        ENTRYPOINT ["ping"]
+    \end{lstlisting}
+
+    \begin{lstlisting}[style=terminal]
+        docker container run --name ping-container-1 ping-image google.com # google.com is appended to the argument list of ENTRYPOINT
+    \end{lstlisting}
+
+    Notes:
+    Use ENTRYPOINT when you need your container to always run the same base command and you want to allow users to append additional commands at the end.
+    ENTRYPOINT can be overridden on the docker rtun command line by supplying the \texttt{--entrypoint} flag.
+
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{|c|c|c|}
+            \hline
+            Command         & Description & Use-case \\ \hline
+            CMD             & Defines the default executable of a Docker image. It can be overridden by argumetns & Utility images allow users to pass different executables and arguments on the command line    \\ \hline
+            ENTRYPOINT      & Defines the default executable. It can be overriden by the "--entrypoint" docker run arguments & Images built for a specific purpose where overriding the default executable is desired.    \\ \hline
+        \end{tabular}
+%        \caption{Your table caption}
+%        \label{tab:mytable}
+    \end{table}
+
+    \subsection{WORKDIR}
+    WORKDIR sets the working directory inside the container for any subsequent instructions (RUN, CMD, ENTRYPOINT, COPY, ADD)
+    Without WORKDIR, instructions like RUN, CMD, ENTRYPOINT, COPY and ADD execute from the container's root directory (/)
+
+    \begin{lstlisting}[style=dockerstyle,caption={Example Dockerfile}]
+        FROM ubuntu:latest
+
+        COPY config.json /my-application #Specifying the folder is bad practice
+
+        ADD http://kplabs.in/friend.jpg /my-application
+
+        RUN cd /my-application && npm install
+
+        RUN cd /my-application && node server.js
+    \end{lstlisting}
+
+    \begin{lstlisting}[style=dockerstyle,caption={Example Dockerfile}]
+        FROM ubuntu:latest
+
+        WORKDIR /my-application # Good practice
+
+        COPY config.json
+
+        ADD http://kplabs.in/friend.jpg
+
+        RUN npm install
+
+        CMD ["node", "server.js"]
+    \end{lstlisting}
+
+    The WORKDIR instruction can be used multiple times in a Dockerfile.
+
+    \subsection{EXPOSE}
+    To connect to a container from the outside network, you must publish its port by mapping it to a port on the host machine (e.g. docker run -p 8080:80)
+
+    EXPOSE act as a documentation label that says "This container listens on this port"
+    It does not actually open any port to the outside world.
+
+    Note:
+    If you use the -P flag when running a container (docker run -P), Docker will automatically map all EXPOSED ports to random high-order ports on your host machine.
+
+    \subsubsection{Useful command}
+    \begin{lstlisting}[style=terminal]
+        docker image inspect nginx-image
+    \end{lstlisting}
+    
+    \subsection{ARG}
+    ARG instuction allows us to set build-time variables.
+
+    It allows you to pass specific values for a variable while it is being built.
+
+    \begin{lstlisting}[style=dockerstyle,caption={Example Dockerfile}]
+        FROM ubuntu:latest
+
+        ARG CONFIG_VERSION=1.2.0
+
+        RUN touch tmp-v${CONFIG_VERSION}.json /tmp
+
+        CMD ["sleep", "3600"]
+    \end{lstlisting}
+
+    \begin{lstlisting}[style=terminal]
+        docker build --build-arg CONFIG_VERSION=1.2.5 -t test-image-02 . # Overrride the argument in the command line
+    \end{lstlisting}
+
+    The values of ARG do not persist once the image is built and the container is running.
+
+    \subsection{ENV}
+
+    The ENV instruction sets the environment variable inside a Docker image.
+    These values will persist.
+
+    \begin{lstlisting}[style=dockerstyle,caption={Example Dockerfile}]
+        FROM ubuntu:latest
+
+        ENV PLANET="world"
+
+        CMD echo "Hello $PLANET"
+    \end{lstlisting}
+
+    \subsubsection{Setting and Overriding the Variables}
+    You can use the -e, --env and --env-file flags to set simple environment variables in the container you're running,
+    or overwrite variables that are defined in the Dockerfile of the image you're running.
+
+    \begin{lstlisting}[style=terminal]
+        docker container run --env PLANET=Pluto env-image-01
+    \end{lstlisting}
+
+    \subsection{LABEL}
+    LABEL adds key-value metadata to a Docker image.
+
+    Think of it like tags or sticky notes attached to your image --- they don't affect how the container runs but provide useful information for humans and tooling.
+
+    \begin{lstlisting}[style=dockerstyle,caption={Example Dockerfile}]
+        FROM nginx:alpine
+
+        LABEL maintainer="maintainer maintainer@maintain.com"
+
+        LABEL use="prototype"
+
+        RUN echo '<h1>Hello</h1>' > /usr/share/nginx/html/index.html
+
+        CMD ["nginx", "-g", "daemon off;"]
+    \end{lstlisting}
+
+    If you have hundreds of images on your server, you cna filter them by their labels.
+
+    \begin{lstlisting}[style=terminal]
+        docker images --filter "label=use=prototype"
+    \end{lstlisting}
+    
     \section{Docker Image Prune}
+    Unused docker images can quietly take up valuable disk space, leading to slower system perofrmance and potential storage issues.
+    Regularly pruning them helps maintain a clean, efficient and prodiction ready environment.
+
+
+    \begin{lstlisting}[style=terminal]
+        docker image prune # Only removes dangling images - A dangling image is one that isn't tagged and isn't referenced by any container.
+        docker image prune # All imags not used by any container.
+    \end{lstlisting}
+
     \section{Layers of a Docker Image}
+    A Docker image is not a single large file.
+
+    It's built as a stack of read-only layers, where each layer represents a discrete change.
+
+    Note:
+    Key instructions like RUN, COPY and ADD create layers in your final image.
+
+    Once an image layer is built, it is read-only. It cannot be changed.
+
+    \begin{lstlisting}[style=dockerstyle,caption={Example Dockerfile}]
+        FROM ubuntu:latest
+
+        RUN apt update
+
+        RUN apt install nginx -y
+
+        RUN apt install nano -y
+
+        RUN echo '<h1>Hello from container</h1>' > /usr/share/nginx/html/index.html
+
+        CMD ["nginx", "-g", "daemon off;"]
+    \end{lstlisting}
+
+    \begin{lstlisting}[style=terminal]
+        docker image history <image-name>
+    \end{lstlisting}
+
+    0B instruction are considered meta data.
+
+    The writeable layer:
+    When a container runs, Docker adds one thin writable layer on top (the container layer).
+    All changes made during the container's lifetime are stored in this thin R/W layer, leaving the underlying image layers untouched and immutable.
+
+    One Image and Multiple Containers:
+    If multiple containers are launched from the same image, each container will have its own indpendent Read/Write layer.
+    These containers will need to be removed if you wish to delete the image.
+
     \section{Docker Build Cache}
+    Docker images are built layer by layer from a Dockerfile.
+
+    Each instruction that modifies the filesystem --- such as RUN,COPY and add --- adds a new read-only layer to the image stack.
+
+    Docker Build Cache reuses these layers from previous builds when the instruction (and its inputs) haven't changed.
+    This can significantly improve the overall build time for the docker image and is more efficient.
+
+    Note:
+    The build cache follows a chain: if a lyer is modified (e.g. a file change in a COPY instruction), every subsequent layer is invalidated and forced to rebuild.
+
+
     \section{Dockerfile - HEALTHCHECK instruction}
+    HEALTHCHECK instruction - Docker allows us to tell the plaform how to test that our application is healthy.
+    When Docker starts a container, it monitors the process that the container runs. If the process ends, the container exits.
+
+    That's just a basic check and does not necessarily tell the detail about the application.
+
+    \begin{lstlisting}[style=dockerstyle,caption={Example Dockerfile}]
+        FROM busybox
+
+        HEALTHCHECK --interval=5s CMD ping -c 1 172.17.0.2 #Health check runs every 5 seconds.
+    \end{lstlisting}
+
+    \subsubsection{Parameters for HEALTHCHECK}
+    We can specify certain options before the CMD operation, these include:
+
+    HEALTHCHECK --interval=5s CMD ping -c 1 172.17.0.2
+    --interval=DURATION (default: 30s)
+    --timeout=DURATION (default: 30s)
+    --start-period=DURATION(default: 0s)
+    -retries=N(default: 3)
+    
+    \section{HEALTHCHECK Instruction Options}
+    HEALTHCHECK instruction is combined with various options to get the desired results.
+
+
+    --interval=DURATION (default: 30s)
+    --timeout=DURATION (default: 30s)
+    --start-period=DURATION(default: 0s)
+    -retries=N(default: 3)
+
+    If you do not specify these options while adding a health check instruction, then the associate default values will automatically be used.
+
+    \subsubsection{Exist Status}
+    The command's exit status indicates the health status of the container The possible values are:
+    0: Success --- The container is healthy and ready for use
+    1: Failure --- The container is not working correctly
+    2: Reserved --- Do not use this exit code
+
+    \subsubsection{Example use-case}
+    Check every five minutes or so that a web-server is able to serve the site's main page within three seconds:
+
+    \begin{lstlisting}[style=dockerstyle,caption={Example Dockerfile}]
+        HEALTHCHECK --interval=5m --timeout=3s \ CMD curl -f http://localhost/ || exit 1
+    \end{lstlisting}
+
+    Health checks can also be performed using the docker health check command. SEE DOCS
+
+    \begin{lstlisting}[style=terminal]
+        docker run -dt --name tmp --health-cmd "curl -f http://localhost" --health-interval=5s busybox sh
+    \end{lstlisting}
+
+    \subsubsection{Overview of CURL}
+    CURL is used with -f option to fail silently.
+    This is mostly done to better enable scripts etc to better deal with failed attempts
+
+%    TODO add links to health check docker documentation
+
     \section{Docker commit}
+    Whenever you make changes inside the container, it can be useful to commit a container's file chagnes or settings into a new image.
+    By default, the container being committed and its processes will be paused while the image is comitted.
+
+    \begin{lstlisting}[style=terminal]
+        docker container commit CONTAINER-ID myimage01 # Syntax
+    \end{lstlisting}
+
+    \subsubsection{Change Option while Commiting}
+    The --change option will apply Dockerfile instructions to the image that is created.
+
+    Supported Dockerfile instructions:
+    - CMD| ENTRYPOINT | ENV | EXPOSE | LABEL | ONBUILD | USER | VOLUME | WORKDIR
+
+    Whenever you make changes inside the container, it can be useful to commit a container's file change or settings into a new image.
+    By default, the container being comitted and its processes will be paused while the image is comitted.
+
+    \begin{lstlisting}[style=terminal]
+        docker container commit CONTAINER-ID myimage01
+    \end{lstlisting}
+
     \section{Flattening Docker Images}
+    Generally, the more layers and image has the more the size of the image.
+    Some of the image size goes from 5GB to 10GB.
+    Flattening an image to a single layer can help reduce the overall size of the image.
+
+    \begin{lstlisting}[style=terminal]
+        docker image history <image> # Get image size
+        docker export myubuntu > myubuntudemo.tar # Export file
+        cat myubuntu.tar | docker import - myubuntu:latest
+        docker images # Verify the image is there
+        docker image history ubuntu # Should see that the image has only one layer and reduced size
+    \end{lstlisting}
+
+    This is referred to as, flattening the image.
+
     \section{Overview of Docker Registries}
+    A registry is similar to a github.
+    Generally whenever you code for system administrator, it might be some kind of confgiruation management scripts like Ansible etc.
+    Whenever you write those scripts it is recommedned to put it in a centralized location where other people can access as well.
+    The code will remain safe there because if you store it locally and the machine fails then your code will be lost.
+    This is the reason you store it in a centralized location.
+
+    The same is true for the centralized docker registry.
+
+    \subsection{Understanding Docker Registry}
+    A Registry is a stateless, highly scalable server side application that store and lets you distribute Docker images.
+    Docker Hub is the simplest example.
+    There are various types of registry available, which includes:
+
+    \begin{itemize}
+        \item Docker Registry
+        \item Docker Trusted Registry
+        \item Private Registry (AWS ECR)
+        \item Docker Hub
+    \end{itemize}
+
+    \begin{lstlisting}[style=terminal]
+        docker tag ubuntu:latest localhost:5000/myubuntu
+        docker images # check if the image is there
+        docker push localhost:5000/myubuntu # This will push to a docker registry
+        #----------- pulling an image from the repository
+        docker pull localhost:5000/myubuntu
+        docker image # Verify that the image has been pulled from the registry.
+    \end{lstlisting}
+
     \section{Pushing Images to a Central Repository}
+
+    \begin{lstlisting}[style=terminal]
+        docker login # Login into docker hub
+        docker tag busybox 5066/mydemo@v1
+        docker push 5066/mydemo
+        #----- verify in docker hub
+        docker pull 5066/mydemo:v1 # pull image from docker hub
+        docker image # verify
+        docker logout # log out of docker hub
+    \end{lstlisting}
+
+    The same goes for other private repositories like ECT.
+    If you want to push certain images to ECR or if you want to pull certain images from ECR then you will have to login.
+    Only after then will you be able to pull or push the images.
+
+    Specifically this is related to the private repositories.
+
+
     \section{Applying Filter for Docker Images}
+    Searching for docker images in the docker registry.
+
+    SEE DOCS also
+
+    \begin{lstlisting}[style=terminal]
+        docker search nginx
+        docker search nginx --limit 5 # Will list the top five starred repos
+        docker search nginx --fitler "is-official=true"
+    \end{lstlisting}
+
     \section{Moving Images Across Hosts}
+    Overview of the Docker save command:
+    The docker save command will save one or more images to a tar archive
+
+    \begin{lstlisting}[style=terminal]
+        docker save busybox > busybox.tar
+    \end{lstlisting}
+
+    Overview of Docker Load:
+    The docker load command will load an image from a tar archive
+
+    \begin{lstlisting}[style=terminal]
+        docker load < busybox.tar
+    \end{lstlisting}
+
 
     \chapter{Networking}
+
+
     \section{Overview of Docker Networking}
+
+
     \section{Understanding Bridge Networks}
+
+
     \section{Implementing User-Defined Bridge Networks}
+
+
     \section{Understanding Host Network}
+
+
     \section{Implementing None Network}
+
+
     \section{Publish All Argument for Exposed Ports}
+
+
     \section{Legacy Approach for Linking Containers}
+
 
     \chapter{Orchestration}
 %    TODO consider skipping
 
+
     \chapter{Orchestration using Kubernetes}
 %    TODO consider skipping
+
 
     \chapter{Installation and Configuration of Docker EE}
 %    TODO consider skipping
 
+
     \chapter{Security}
+
+
     \section{Overview of Container Security Scanning}
+
+
     \section{Configuring Container Scan with DTR}
+
+
     \section{DTR Webhooks}
+
+
     \section{Overview of UCP Client Bundle}
+
+
     \section{Integrating CLI with UCP Client Bundle}
+
+
     \section{Overview of LDAP}
+
+
     \section{Integrating LDAP with UCP}
+
+
     \section{Linux Namespaces}
+
+
     \section{Control Groups (cgroups)}
+
+
     \section{Limiting CPUs for Containers}
+
+
     \section{Reservation vs Limits}
+
+
     \section{Swarm MTLS}
+
+
     \section{Managing Secrets in Docker Swarm}
+
+
     \section{Docker Content Trust}
+
+
     \section{Overview of Docker Groups}
+
+
     \section{Overview of Linux Capabilities for Docker}
+
+
     \section{Privileged Containers}
 
+
     \chapter{Storage and Volumes}
+
+
     \section{Overview of Docker Storage Drivers}
+
+
     \section{Block vs Object Storage}
+
+
     \section{Changing Storage Drivers}
+
+
     \section{Overview of Docker Volumes}
+
+
     \section{Bind Mounts}
+
+
     \section{Automatically Remove Volume on Container Exist}
+
+
     \section{Overview of Device Mapper}
+
+
     \section{Logging Drivers}
+
+
     \section{Creating Volumes in Kubernetes}
+
+
     \section{PersistentVolumes and PersistentVolumeClaims}
+
+
     \section{Volume Expansion in Kubernetes}
+
+
     \section{Reclaim Policy}
+
+
     \section{Understand Retain Reclaim Policy}
+
+
     \section{Storage Class}
 
 %    \chapter{Exam Preparation Section}
