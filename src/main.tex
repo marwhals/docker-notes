@@ -878,30 +878,146 @@
 
     \chapter{Networking}
 
-
     \section{Overview of Docker Networking}
+    Some docker containers may want to communicate with the internet, some might want to be in the isolated conditions.
+    Specifically the containers which might have critical data.
 
+    Docker takes care of the networking aspect so that the container can communicate with other containers and also with Docker Host.
+
+    \subsection{Overview of Network Drivers}
+    Docker networking subsystem is pluggable using drivers.
+    There are several drivers available by default and this provides core networking functionality.
+    \begin{itemize}
+        \item Bridge
+        \item Host
+        \item Overlay
+        \item Macvlan
+        \item none
+    \end{itemize}
+
+    If you are using Docker community edition, by default you will have bridge, you will have host and you will have none.
+    If you are using Docker Enterprise, you will also have the overlay one.
+
+    \begin{lstlisting}[style=terminal]
+        docker network ls # see associated networks
+        docker inspect bridge # See more details about the bridge network
+    \end{lstlisting}
+
+%    TODO add diagram
+
+    \begin{lstlisting}[style=terminal]
+        docker container run -dt --name myhost --network host ubuntu # specify a network for the container to run in.
+        docker network inspect host # Check the container is running in the network
+    \end{lstlisting}
 
     \section{Understanding Bridge Networks}
+    A bridge network basically makes uses a software brdige which allows containers connected to the same bridge network to communicate,
+    while providing isolation from containers which are not connected to that bridge network.
 
+%    TODO add diagram
+
+    \begin{lstlisting}[style=terminal]
+        docker container inspect demo # See the network that a container is associated with
+    \end{lstlisting}
+
+    The containers which are present under the bridge network will be able to commnicate with each other.
+    These containers have the interface.
+
+    Note:
+    Whenever you create a container and you don't specify the network, it gets creted on the bridge network.
+
+    This automatic communication between containers is for the bridge network.\
+
+    \subsection{Overview of Network Drivers}
+    Bridge is the default network driver for Docker.
+    If we do not specify a driver, this is the type of network you are creating.
+    When you start Docker, a default bridge network (also called a bridge) is created automatically and newly-started containers connect to unless specified.
+
+    We can also create User-Defined Bridge Nework which is superior to the default bridge.
 
     \section{Implementing User-Defined Bridge Networks}
+    \subsection{Overview of User-Defined Bridge}
+    There are various differences between default and user-defined bridge.
+    Some of these include:
+    \begin{itemize}
+        \item User-definedd bridges provide better isolation and interoperability betwen containerize applications
+        \item User-defined bridge provide automatica DNS resolution betwen containers
+        \item Containers can be attached and detached from user-defined networks on the fly.
+        \item Each user-definedd network creates a configurable brdige.
+        \item Linked containers on the default bridge network share environments.
+    \end{itemize}
 
+    In order to create a container in the user defined bridge, you will first need to create the user defined bridge.
+    You can give any name to the network, however the driver which is connected to the network matters.
+
+    \begin{lstlisting}[style=terminal]
+        docker network create --driver bridge mybridge
+        docker network ls # Should see the above network in the list
+        docker network create mybridge-demo # No specifed driver. Docker will default to the bridge driver.
+    \end{lstlisting}
 
     \section{Understanding Host Network}
+    \subsection{Overview of Host Network}
+    This driver removes the network isolation between the docker host and the docker containers to use the host's networking directly.
+    For instance, if you run a container which binds to port 80 and you use host networking, the container's application will be available on port 80 on the host's IP address.
 
+%    TODO Host Network vs Bridge Network diagram
+
+    Example:
+    Want to deploy a service like an intrusion detection system.
+    You cannot install that in a container with a bridge network because if you do that, then the IDDs will monitor the traffic of the container.
+    It will not monitor that of the host.
+
+    However if you want to monitor in such a way that containers application can monitor the traffic of eth0 of the host, you need make use of the host network.
 
     \section{Implementing None Network}
+    \subsection{Overview of None Network}
+    If you want to completly disable the networking stack on a container, you can use the none network.
+    This mode will not configure any IP for the container and doesn't have any access to the external network as well as for other containers.
 
+    The none network is basically launch in an isolated network stack.
 
     \section{Publish All Argument for Exposed Ports}
+    \subsection{Overview of Port Publishing}
+    \begin{lstlisting}[style=terminal]
+        docker container run -dt --name webserver -p 80:80 nginx
+    \end{lstlisting}
 
+    There is also a second approach to publishing all the exposed ports of the container.
+    \begin{lstlisting}[style=terminal]
+        docker container run -dt --name webserver -P nginx
+    \end{lstlisting}
+
+    This is also referred to as a publish all .
+    In this approach, all exposed ports are published to random port of the host.
+
+    Example command:
+    \begin{lstlisting}[style=terminal]
+        docker contaienr run -dt -P --name webserver02 nginx
+    \end{lstlisting}
+
+    So generally whenever you make use of -P option, what happens is that any port which is exposed in a specific image
+    the hyphen P option will correspondingly create a random port in the host and it will make it the exposed port of the container.
+    In this case you don't really have to explicitly specify the port mapping.
+    It automatically does it for you.
 
     \section{Legacy Approach for Linking Containers}
+    This is similar to one of the features which have been provided by the customer defined bridge network.
 
+    \begin{lstlisting}[style=terminal]
+        docker container run -dt --name container01 busybox sh
+        docker contaienr run -dt --link container01:container --name container02 busybox sh
+    \end{lstlisting}
+
+    This is in a default bridge network. This is not the user defined bridge network.
+
+    The --link option was something which is legacy.
+    It is the older approach of defining things.
+
+    Later, docker came up with an approach where this kind of feature is already available with the user defined bridge network.
+    It is not reccomended to be used now.
 
     \chapter{Orchestration}
-%    TODO consider skipping
 
 
     \chapter{Orchestration using Kubernetes}
