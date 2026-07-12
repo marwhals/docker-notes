@@ -29,57 +29,124 @@
 \contentsline {subsection}{\numberline {3.2.1}FROM}{16}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}RUN}{16}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}CMD}{16}{subsection.3.2.3}%
-\contentsline {section}{\numberline {3.3}Docker Image Prune}{17}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Layers of a Docker Image}{17}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Docker Build Cache}{17}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Dockerfile - HEALTHCHECK instruction}{17}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Docker commit}{17}{section.3.7}%
-\contentsline {section}{\numberline {3.8}Flattening Docker Images}{17}{section.3.8}%
-\contentsline {section}{\numberline {3.9}Overview of Docker Registries}{17}{section.3.9}%
-\contentsline {section}{\numberline {3.10}Pushing Images to a Central Repository}{17}{section.3.10}%
-\contentsline {section}{\numberline {3.11}Applying Filter for Docker Images}{17}{section.3.11}%
-\contentsline {section}{\numberline {3.12}Moving Images Across Hosts}{17}{section.3.12}%
-\contentsline {chapter}{\numberline {4}Networking}{19}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Overview of Docker Networking}{19}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Understanding Bridge Networks}{19}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Implementing User-Defined Bridge Networks}{19}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Understanding Host Network}{19}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Implementing None Network}{19}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Publish All Argument for Exposed Ports}{19}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Legacy Approach for Linking Containers}{19}{section.4.7}%
-\contentsline {chapter}{\numberline {5}Orchestration}{21}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Orchestration using Kubernetes}{23}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Installation and Configuration of Docker EE}{25}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Security}{27}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Overview of Container Security Scanning}{28}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Configuring Container Scan with DTR}{28}{section.8.2}%
-\contentsline {section}{\numberline {8.3}DTR Webhooks}{28}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Overview of UCP Client Bundle}{28}{section.8.4}%
-\contentsline {section}{\numberline {8.5}Integrating CLI with UCP Client Bundle}{28}{section.8.5}%
-\contentsline {section}{\numberline {8.6}Overview of LDAP}{28}{section.8.6}%
-\contentsline {section}{\numberline {8.7}Integrating LDAP with UCP}{28}{section.8.7}%
-\contentsline {section}{\numberline {8.8}Linux Namespaces}{28}{section.8.8}%
-\contentsline {section}{\numberline {8.9}Control Groups (cgroups)}{28}{section.8.9}%
-\contentsline {section}{\numberline {8.10}Limiting CPUs for Containers}{28}{section.8.10}%
-\contentsline {section}{\numberline {8.11}Reservation vs Limits}{28}{section.8.11}%
-\contentsline {section}{\numberline {8.12}Swarm MTLS}{28}{section.8.12}%
-\contentsline {section}{\numberline {8.13}Managing Secrets in Docker Swarm}{28}{section.8.13}%
-\contentsline {section}{\numberline {8.14}Docker Content Trust}{28}{section.8.14}%
-\contentsline {section}{\numberline {8.15}Overview of Docker Groups}{28}{section.8.15}%
-\contentsline {section}{\numberline {8.16}Overview of Linux Capabilities for Docker}{28}{section.8.16}%
-\contentsline {section}{\numberline {8.17}Privileged Containers}{28}{section.8.17}%
-\contentsline {chapter}{\numberline {9}Storage and Volumes}{29}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Overview of Docker Storage Drivers}{29}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Block vs Object Storage}{29}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Changing Storage Drivers}{29}{section.9.3}%
-\contentsline {section}{\numberline {9.4}Overview of Docker Volumes}{29}{section.9.4}%
-\contentsline {section}{\numberline {9.5}Bind Mounts}{29}{section.9.5}%
-\contentsline {section}{\numberline {9.6}Automatically Remove Volume on Container Exist}{29}{section.9.6}%
-\contentsline {section}{\numberline {9.7}Overview of Device Mapper}{29}{section.9.7}%
-\contentsline {section}{\numberline {9.8}Logging Drivers}{29}{section.9.8}%
-\contentsline {section}{\numberline {9.9}Creating Volumes in Kubernetes}{29}{section.9.9}%
-\contentsline {section}{\numberline {9.10}PersistentVolumes and PersistentVolumeClaims}{29}{section.9.10}%
-\contentsline {section}{\numberline {9.11}Volume Expansion in Kubernetes}{29}{section.9.11}%
-\contentsline {section}{\numberline {9.12}Reclaim Policy}{29}{section.9.12}%
-\contentsline {section}{\numberline {9.13}Understand Retain Reclaim Policy}{29}{section.9.13}%
-\contentsline {section}{\numberline {9.14}Storage Class}{29}{section.9.14}%
+\contentsline {subsection}{\numberline {3.2.4}Example DockerFile}{16}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}COPY and ADD}{16}{subsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.2.6}ENTRYPOINT}{17}{subsection.3.2.6}%
+\contentsline {subsubsection}{Revising Basics of CMD Instruction}{17}{section*.6}%
+\contentsline {subsubsection}{ENTRYPOINT instruction}{17}{section*.7}%
+\contentsline {subsection}{\numberline {3.2.7}WORKDIR}{17}{subsection.3.2.7}%
+\contentsline {subsection}{\numberline {3.2.8}EXPOSE}{18}{subsection.3.2.8}%
+\contentsline {subsubsection}{Useful command}{18}{section*.8}%
+\contentsline {subsection}{\numberline {3.2.9}ARG}{18}{subsection.3.2.9}%
+\contentsline {subsection}{\numberline {3.2.10}ENV}{19}{subsection.3.2.10}%
+\contentsline {subsubsection}{Setting and Overriding the Variables}{19}{section*.9}%
+\contentsline {subsection}{\numberline {3.2.11}LABEL}{19}{subsection.3.2.11}%
+\contentsline {section}{\numberline {3.3}Docker Image Prune}{20}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Layers of a Docker Image}{20}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Docker Build Cache}{20}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Dockerfile - HEALTHCHECK instruction}{21}{section.3.6}%
+\contentsline {subsubsection}{Parameters for HEALTHCHECK}{21}{section*.10}%
+\contentsline {section}{\numberline {3.7}HEALTHCHECK Instruction Options}{21}{section.3.7}%
+\contentsline {subsubsection}{Exist Status}{21}{section*.11}%
+\contentsline {subsubsection}{Example use-case}{21}{section*.12}%
+\contentsline {subsubsection}{Overview of CURL}{22}{section*.13}%
+\contentsline {section}{\numberline {3.8}Docker commit}{22}{section.3.8}%
+\contentsline {subsubsection}{Change Option while Commiting}{22}{section*.14}%
+\contentsline {section}{\numberline {3.9}Flattening Docker Images}{22}{section.3.9}%
+\contentsline {section}{\numberline {3.10}Overview of Docker Registries}{22}{section.3.10}%
+\contentsline {subsection}{\numberline {3.10.1}Understanding Docker Registry}{23}{subsection.3.10.1}%
+\contentsline {section}{\numberline {3.11}Pushing Images to a Central Repository}{23}{section.3.11}%
+\contentsline {section}{\numberline {3.12}Applying Filter for Docker Images}{23}{section.3.12}%
+\contentsline {section}{\numberline {3.13}Moving Images Across Hosts}{24}{section.3.13}%
+\contentsline {chapter}{\numberline {4}Networking}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Overview of Docker Networking}{25}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Overview of Network Drivers}{25}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Understanding Bridge Networks}{25}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Overview of Network Drivers}{26}{subsection.4.2.1}%
+\contentsline {section}{\numberline {4.3}Implementing User-Defined Bridge Networks}{26}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Overview of User-Defined Bridge}{26}{subsection.4.3.1}%
+\contentsline {section}{\numberline {4.4}Understanding Host Network}{26}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Overview of Host Network}{26}{subsection.4.4.1}%
+\contentsline {section}{\numberline {4.5}Implementing None Network}{27}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Overview of None Network}{27}{subsection.4.5.1}%
+\contentsline {section}{\numberline {4.6}Publish All Argument for Exposed Ports}{27}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Overview of Port Publishing}{27}{subsection.4.6.1}%
+\contentsline {section}{\numberline {4.7}Legacy Approach for Linking Containers}{27}{section.4.7}%
+\contentsline {chapter}{\numberline {5}Orchestration}{29}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Overview of Container Orchestration}{29}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Challenge 1 - Manual Scaling}{29}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Challenge 2 - Lack of Fault Tolerance}{29}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Introducting container orchestration}{29}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}Additional things provided by container orchestration tool}{30}{subsection.5.1.4}%
+\contentsline {subsection}{\numberline {5.1.5}Container orchestration tools}{30}{subsection.5.1.5}%
+\contentsline {section}{\numberline {5.2}Overview of Docker Swarm}{30}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Useful bash script}{30}{subsection.5.2.1}%
+\contentsline {section}{\numberline {5.3}Initializing Docker Swarm}{31}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Services tasks and containers}{31}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Services, Tasks and Containers diagram}{31}{subsection.5.4.1}%
+\contentsline {section}{\numberline {5.5}Scaling Services in Swarm}{31}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Multiple Approaches to Scale Swarm Services}{31}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Replicated vs Global Service}{32}{section.5.7}%
+\contentsline {subsection}{\numberline {5.7.1}Global Service}{32}{subsection.5.7.1}%
+\contentsline {section}{\numberline {5.8}Draining Swarm Node}{32}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Inspecting Swarm Service and Nodes}{32}{section.5.9}%
+\contentsline {section}{\numberline {5.10}Adding Network and Publishing Ports to Swarm and tasks}{33}{section.5.10}%
+\contentsline {section}{\numberline {5.11}Overview of Docker Compose}{33}{section.5.11}%
+\contentsline {section}{\numberline {5.12}Deploying Multi-Service Application in Swarm}{33}{section.5.12}%
+\contentsline {subsection}{\numberline {5.12.1}Overview of Docker Stack}{33}{subsection.5.12.1}%
+\contentsline {section}{\numberline {5.13}Locking Swarm Cluster}{34}{section.5.13}%
+\contentsline {section}{\numberline {5.14}Troubleshooting Swarm Service Deployments}{34}{section.5.14}%
+\contentsline {section}{\numberline {5.15}Mounting Volumes via Swarm}{34}{section.5.15}%
+\contentsline {section}{\numberline {5.16}Control Service Placement}{35}{section.5.16}%
+\contentsline {subsection}{\numberline {5.16.1}Overview of Placement Constraints}{35}{subsection.5.16.1}%
+\contentsline {section}{\numberline {5.17}Overview of Overlay networks}{35}{section.5.17}%
+\contentsline {section}{\numberline {5.18}Secure Overlay Networks}{36}{section.5.18}%
+\contentsline {subsection}{\numberline {5.18.1}Overview of Secure Overlay Networks}{36}{subsection.5.18.1}%
+\contentsline {subsection}{\numberline {5.18.2}Important Notes}{36}{subsection.5.18.2}%
+\contentsline {section}{\numberline {5.19}Creating Swarm Services using Templates}{36}{section.5.19}%
+\contentsline {subsection}{\numberline {5.19.1}Example}{36}{subsection.5.19.1}%
+\contentsline {subsection}{\numberline {5.19.2}Valid Placeholders table}{36}{subsection.5.19.2}%
+\contentsline {subsection}{\numberline {5.19.3}Supported Flags}{36}{subsection.5.19.3}%
+\contentsline {section}{\numberline {5.20}Split Brain and The Importance of Quorum}{37}{section.5.20}%
+\contentsline {subsection}{\numberline {5.20.1}Quorum}{37}{subsection.5.20.1}%
+\contentsline {subsection}{\numberline {5.20.2}Important notes for a Quorum}{37}{subsection.5.20.2}%
+\contentsline {section}{\numberline {5.21}High Availability of Swarm Manager Nodes}{37}{section.5.21}%
+\contentsline {subsection}{\numberline {5.21.1}Manager Nodes}{37}{subsection.5.21.1}%
+\contentsline {section}{\numberline {5.22}Running Manager-Only nodes in Swarm}{37}{section.5.22}%
+\contentsline {section}{\numberline {5.23}Recover from loosing the quorum}{38}{section.5.23}%
+\contentsline {section}{\numberline {5.24}Docker System Commands}{38}{section.5.24}%
+\contentsline {chapter}{\numberline {6}Orchestration using Kubernetes}{39}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Installation and Configuration of Docker EE}{41}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Security}{43}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Overview of Container Security Scanning}{44}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Configuring Container Scan with DTR}{44}{section.8.2}%
+\contentsline {section}{\numberline {8.3}DTR Webhooks}{44}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Overview of UCP Client Bundle}{44}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Integrating CLI with UCP Client Bundle}{44}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Overview of LDAP}{44}{section.8.6}%
+\contentsline {section}{\numberline {8.7}Integrating LDAP with UCP}{44}{section.8.7}%
+\contentsline {section}{\numberline {8.8}Linux Namespaces}{44}{section.8.8}%
+\contentsline {section}{\numberline {8.9}Control Groups (cgroups)}{44}{section.8.9}%
+\contentsline {section}{\numberline {8.10}Limiting CPUs for Containers}{44}{section.8.10}%
+\contentsline {section}{\numberline {8.11}Reservation vs Limits}{44}{section.8.11}%
+\contentsline {section}{\numberline {8.12}Swarm MTLS}{44}{section.8.12}%
+\contentsline {section}{\numberline {8.13}Managing Secrets in Docker Swarm}{44}{section.8.13}%
+\contentsline {section}{\numberline {8.14}Docker Content Trust}{44}{section.8.14}%
+\contentsline {section}{\numberline {8.15}Overview of Docker Groups}{44}{section.8.15}%
+\contentsline {section}{\numberline {8.16}Overview of Linux Capabilities for Docker}{44}{section.8.16}%
+\contentsline {section}{\numberline {8.17}Privileged Containers}{44}{section.8.17}%
+\contentsline {chapter}{\numberline {9}Storage and Volumes}{45}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Overview of Docker Storage Drivers}{45}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Block vs Object Storage}{45}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Changing Storage Drivers}{45}{section.9.3}%
+\contentsline {section}{\numberline {9.4}Overview of Docker Volumes}{45}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Bind Mounts}{45}{section.9.5}%
+\contentsline {section}{\numberline {9.6}Automatically Remove Volume on Container Exist}{45}{section.9.6}%
+\contentsline {section}{\numberline {9.7}Overview of Device Mapper}{45}{section.9.7}%
+\contentsline {section}{\numberline {9.8}Logging Drivers}{45}{section.9.8}%
+\contentsline {section}{\numberline {9.9}Creating Volumes in Kubernetes}{45}{section.9.9}%
+\contentsline {section}{\numberline {9.10}PersistentVolumes and PersistentVolumeClaims}{45}{section.9.10}%
+\contentsline {section}{\numberline {9.11}Volume Expansion in Kubernetes}{45}{section.9.11}%
+\contentsline {section}{\numberline {9.12}Reclaim Policy}{45}{section.9.12}%
+\contentsline {section}{\numberline {9.13}Understand Retain Reclaim Policy}{45}{section.9.13}%
+\contentsline {section}{\numberline {9.14}Storage Class}{45}{section.9.14}%
