@@ -1468,38 +1468,255 @@
     \chapter{Security}
 
     \section{Overview of Container Security Scanning}
+    Docker containers can have security vulnerabilities.
+
+    If blindly pulled and if containers are running in production, it can result in breach.
+    
+    \subsection{Overview of Security Scanning in DTR}
+    DTR allows us to perform security scan for the containers.
+
+    These scans can be performed "On Push" or manually.
 
     \section{Configuring Container Scan with DTR}
 
     \section{DTR Webhooks}
+    \subsection{Overview of the Webhooks}
+    You can configure DTR to automatically post even notifications to a webhook URL of your choosing.
+%    TODO see diagram
+%    TODO see example
 
     \section{Overview of UCP Client Bundle}
+
+    A client bundle is a group of certificates downloadable directly from the Docker Universal Control Plane (UCP)
+
+    Depending on the permission associate with the user, you can now execute docker swarm commands from your remote machine the take effect on the remote cluster.
+
+    \begin{itemize}
+        \item You can create a new service in UCP from your laptop
+        \item Login to continue from your laptop without SSH (via API)
+    \end{itemize}
 
     \section{Integrating CLI with UCP Client Bundle}
 
     \section{Overview of LDAP}
+    Central directory where all users are stored.
+    Depending on the federated setting users can log in.
+
+    Note: PCI-DSS standards, you need to revoke the access once they leave the organisation whether they are either resigned or terminated.
+
+    Doing in by service takes time. Can just do it in one place via LDAP.
+
+    Various solutions available which can store users centrally:
+    - Microsoft Active Directory
+    - RedHat Identity Management / FreeIPA
 
     \section{Integrating LDAP with UCP}
 
     \section{Linux Namespaces}
 
+    \subsection{Overview of Namespaces}
+    Docker uses a technology called namespaces to provide the isolated work space called the container.
+
+    These namespaces provide a layer of isolation. Each aspect of a container runs in a separate namespace and its access it limited to that namespace.
+
+    PID is a component of Linux namespaces. There are others like UTS and IPC.
+    A PID basically allows you to have separation in terms of processes fo that the containers or container running here, cannot see any other processes which are running within the same operating system.
+
+    So by any change, if a specific container has been breached ther attack will not be able to connect or not be able to know the wider picture on what exactly is running.
+
+    If you are running multiple containers, each will have its own namespace in terms of process ID and network etc.
+
+    \subsection{Namespaces in Linux}
+    There are six different type of namespace available.
+    \begin{itemize}
+        \item Inter-Process Communication (IPC)
+        \item Process (Pid)
+        \item Network (net)
+        \item User Id (user)
+        \item Mount (mnt)
+        \item UTS
+    \end{itemize}
+
     \section{Control Groups (cgroups)}
+    \subsection{Overview of Control Groups}
+    Control Groups (cgroups) is a Linux kernel feature that limits, accounts for and isolates the resource usage
+    (CPU, memory, disk I/O, network, etc) of a collection of processes.
+
+%    TODO add diagram
+
+    Consider scenario where a container on a shared host is using a high amount of CPU.
+
+    Docker makes use of control gruops to control or to limit the ram and CPU that can be assigned.
+    Now contorl gruop can not only limit by Ram and CPU, it can do a other things like disks IO etc.
+
+    However, Docker does not support each and every implementation of what cgroups suppose.
+    The primary ones are the CPU and memory.
 
     \section{Limiting CPUs for Containers}
+    There are various ways in which you can limit the CPU for containers, these include:
+
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{|c|c|}
+            \hline
+            Approaches         & Description \\ \hline
+            \texttt{--cpus=<value>}             & If host has 2 CPUs and if you set --cpus=1, then container is guaranteed at most one CPU. You can specify --cpus=0.5    \\ \hline
+            \texttt{--cpuset-cpus}      & Limit the specific CPUs or cores a container can use. A comma-separated list or hyphen-separated rnage of CPUs a container can use. 1st CPU is numbered 0, 2nd CPU is numbered 1. Value of 0-3 means usage of first, second, third and fourth CPU. Value of 1,3 means second and fourth CPU   \\ \hline
+        \end{tabular}
+%        \caption{Your table caption}
+%        \label{tab:mytable}
+    \end{table}
+
+    \begin{lstlisting}[style=terminal]
+        # Commands for limited CPU
+        docker container run -dt --name constraint01 --cpus=1.5 busybox sh
+        docker container run -dt --name constraint02 --cpuset-cpus-0,1 busybox sh
+    \end{lstlisting}
 
     \section{Reservation vs Limits}
+    By default, a container has no resource constraints and can use as much of a given resource as the host's kernel scheduler allows.
+
+    It is important not to allow a running container to consume too much of the host machine's memory.
+
+    On Linux hosts, if the kernel detects that there is not enough memory to perform important system functions, it throws an Out Of Memory exception and starts killing processes to free up memory.
+
+    \subsection{Reservation vs Limit}
+    Limit imposes an upper limit to the amount of memory that can potentially be used by a Docker container.
+    Reservations on the other hand are less rigid.
+
+    When the system is running low on memory and there is contention, reservation tries to bring the container's memory consumption at or below the reservation limit.
+
+%    TODO do labs
+
+    \begin{lstlisting}[style=terminal]
+        # Commands for limiting RAM
+        docker container run -dt --name container06 -m 500m --memory-reservation 250m busybox sh
+    \end{lstlisting}
+
+    Reservation is a soft limit that the container can go beyond.
+    Limit is a hard limit. Once the limit has been sent, the container cannot go beyond what you have set with the limit value.
 
     \section{Swarm MTLS}
+    The nodes in a swarm use mutual Transport Layer Security (TLS) to authenticate, authorize and encrypt the communications with other nodes in the swarm.
+    By default, the manager node generates a new root certificate authority (CA) along with a key pair, which are used to secure communications with other nodes that join the \textbf{swarm}
+
+    You can specify your own externally-generated root CA, using the \texttt{--external-ca} flag of the docker swarm init command.
+
+    \subsection{Overview of Generated Certificate}
+    Each time a new node joins the swarm, the manager issues a certificate to the node.
+%    TODO add diagram
+
+    \subsection{Overview of Tokens}
+    The manager node also generates two tokens to use when you join additional nodes to the swarm: one worker token and one manager token.
+    Each token includes the digest of the root CA's certificate and a randomly generated secret.
+
+    When a node joins the swarm, the joining node uses the digest to validate the root CA certificate from the remote manager.
+
+    \subsection{Rotating the CA Certificate}
+    Run \texttt{docker swarm ca --rotate} to generate a new CA certificate and key.
+
+    In the above command, docker generated a cross-signed certificate signed by the previous old CA.
+
+    After every node in the swarm has a new TLS certificate signed by the new CA, Docker forgets aboutt the old CA certificate and key material and tells all the node to trust the new CA certificate only.
+
+    Join tokens change accordingly.
+
+%    TODO see labs
+
+    \subsection{Certificate Details}
+
+    By default, each node in the swarm renews its certificate every three months.
+
+    You can configure this interval by running the \texttt{docker swarm update --cert-expiry <TIME PERIOD>}
+
+    In the event that a cluster CA key or a manager node is compromised, you can rotate the swarm root CA so that none of the nodes trust certificates signed by the old root CA anymore.
+
+%    TODO get overview of PKI
 
     \section{Managing Secrets in Docker Swarm}
+    Docker secrets basically allows us to centrally manage the secret data and to also securely transmit those secrets to only the container that need to access them.
+
+    Centrally storing the secrets can be achieved with a lot of solutions. These include Hashicorp Valut.
+
+    Note: A given secret is only to those services which have been granted explicity access to it and onlly while those service tasks are running.
+
+    \begin{lstlisting}[style=terminal]
+        # Creating secrets
+        docker secret create dbcreds db_creds.txt
+        # Allowing containers to have access to the secret
+        docker service create --name webserver --secret dbcreds nginx
+        # Secrets location --- use docker exec -it to enter container
+        /run/ <--- this is a temporary file system
+        cd /run/secrets/ <--- should be able to see dbcreds
+    \end{lstlisting}
 
     \section{Docker Content Trust}
+    When we are downloading an image from a network or from the internet integrity becomes true concern.
+
+    Content trust give you the ability to verify both the integrity and the publisher of all the data received from a registry over any channel.
+
+    This can be achieved with the help of digital signatures.
 
     \section{Overview of Docker Groups}
+    \texttt{ps aux | grep docker} Docker runs as a root user. So everything will work.
+
+    Do not add to sudoers as this will give the user the ability to run other commands.
+
+    Docker recommends creating a docker group.
+    See /etc/group. Should see docker. Add user name there.
+    \texttt{su - newuser} and then run \texttt{docker ps}.
+    This user "newuser" should be able to see all the container.
+    This user does not have sudo privilleges.
+    Can also use \texttt{usermod -aG docker dockeruser}
+
+    It is not a best practice to directly modify the group file. Use the above command instead.
+
 
     \section{Overview of Linux Capabilities for Docker}
 
+    There are several types of capabilities which Linux provides to have granular access at the application level.
+
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{|c|c|}
+            \hline
+            Capability         & Action \\ \hline
+            SETCAP         & Yes \\ \hline
+            CHOWN         & Yes \\ \hline
+            SYS_MODULE         & No \\ \hline
+            LINUX_IMMUTABLE         & No \\ \hline
+        \end{tabular}
+%        \caption{Your table caption}
+%        \label{tab:mytable}
+    \end{table}
+
+    Depending upon the capabilities which are assigned or not assigned, the container can or cannot do a certain type of operation.
+    Even if you are logged in as root.
+    These capabilities can be added.
+%    SEE DOCS -- SEE LINUX
+
+    This can be very useful when you want to have granular control over what a specific container can do.
+    It can be useful during the hardening of your process.
+
     \section{Privileged Containers}
+    By default, a docker container does not have many capabilities assigned to it.
+    Docker containers are also not allowed to access any devices.
+    Hence by default, a docker container cannot perform various use-cases like "run docker container" inside a docker container.
+
+    \subsection{Privileged Containers}
+    Privileged Containers can acess all the devices on the host as well as have configuration in AppArmore or SELinux to allow the contaienr nearly all the same access to the host as processes running outside containers on the host.
+    - Limits that you set for privileged containers will not be followed.
+    - Running a prilvileged flag gives all the capabilities to the container.
+
+    \begin{lstlisting}[style=terminal]
+        # Start a prilvileged container
+        docker run -dt --privileged amazonlinux bash
+    \end{lstlisting}
+
+    All devices available to the host are also available to this container.
+    In a privileged container, Linux capabilities are not restricted.
+
+    Since these have access to the host, their usage should be restricted.
 
 
     \chapter{Storage and Volumes}
